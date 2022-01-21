@@ -1,0 +1,23 @@
+= simple_form_for(@post) do |f|
+  = f.error_notification
+  .field
+    .control
+      = f.input :title, required: true, input_html: { class: 'input' }, wrapper: false, label_html: { class: "label" }, label: "Título"
+  .field
+    .control
+      = f.input :body, required: true, input_html: { class: 'textarea' }, wrapper: false, label_html: { class: "label" }, label: "Post"
+  .field
+    %label.label Tópico e Ação
+    .control.has-icons-left
+      %span.select
+        = f.input_field :subject_id, collection: @subjects.map { |c| [c.title, c.id] }, prompt: "Selecione o Tópico"
+      %span.icon.is-small.is-left
+        %i.fa.fa-tag
+    .control.has-icons-left
+      %span.select
+        = f.input_field :post_type, collection: [["Leciono", "offer"], ["Procuro Professor", "looking"]], prompt: "Selecione a Ação"
+      %span.icon.is-small.is-left
+        %i.fa.fa-tag
+  .field
+    .control
+      = f.button :submit, "Postar", class:"button is-info"

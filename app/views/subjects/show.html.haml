@@ -1,0 +1,10 @@
+.level
+  .level-left
+    %h1.title.is-2= @subject.title
+  .level-right
+    - if has_role?(:admin)
+      = link_to 'Editar Tópico', edit_subject_path(@subject), class:"button"
+%hr/
+.columns
+  = render 'shared/posts'
+  = render 'shared/sidebar'

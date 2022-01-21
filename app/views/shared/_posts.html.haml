@@ -1,0 +1,24 @@
+.column.is-8
+  .posts
+    - @posts.each do |post|
+      .columns.bb-not-last.pv10
+        .column.is-1
+          - @author = post.user
+          = gravatar_image_tag(@author.email, class:'border-radius-50', size: 48, alt: @author.username)
+        .column.is-8
+          = link_to post do
+            %h3.title.is-5= post.title
+          .content
+            = truncate(strip_markdown(post.body), length: 140)
+            %p
+              %em
+                %small
+                  %b= post.post_type == "offer" ? "Procura por alunos." : "Procura por professor."
+                  Postado #{time_ago_in_words(post.created_at)} atrás em
+                  - if @subject = post.subject
+                    = link_to @subject.title, @subject
+                  por #{link_to @author.username, profile_path(@author.to_param), class: "has-text-black"}
+        - if post_author(post) || has_role?(:admin)
+          .column.has-text-right
+            = link_to 'Editar', edit_post_path(post), class:'button'
+            = link_to 'Excluir', post, method: :delete, data: { confirm: 'Tem certeza disso?' }, class: "button"

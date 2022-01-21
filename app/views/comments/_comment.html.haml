@@ -1,0 +1,23 @@
+- @author = comment.user
+.box
+  %article.media
+    .media-left
+      %figure.image.is-48x48= gravatar_image_tag(@author.email, class: 'border-radius-50', size: 48, alt: @author.username)
+    .media-content
+      .content
+        %p
+          %strong= link_to @author.username, profile_path(@author.to_param), class: "has-text-black"
+          %small= time_ago_in_words(comment.created_at)
+          %br/
+          = markdown(comment.body)
+      - if comment_author(comment) || has_role?(:admin)
+        %nav.level.is-mobile
+          .level-left
+            %a.level-item
+              = link_to edit_post_comment_path(comment.post, comment) do
+                %span.icon.is-small
+                  %i.fa.fa-pencil
+            %a.level-item
+              = link_to [comment.post, comment], method: :delete, data: {confirm: "Tem certeza disso ?" } do
+                %span.icon.is-small
+                  %i.fa.fa-trash-o
